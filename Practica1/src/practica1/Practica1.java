@@ -5,6 +5,8 @@
  */
 package practica1;
 
+import java.awt.Color;
+
 /**
  *
  * @author yasmi
@@ -15,10 +17,14 @@ public class Practica1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("Holis");
+        
+        
         MainFrame m1 = new MainFrame();
         m1.setVisible(true);
+        m1.setBackground(Color.getHSBColor(191, 157, 194));
+        m1.setForeground(Color.getHSBColor(191, 157, 194));
+        
+        
     }
     
 }
