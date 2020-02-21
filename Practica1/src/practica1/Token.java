@@ -45,6 +45,7 @@ public class Token {
       cadena_ER,
       
       doble_porcentaje,
+      nombre_lexema,
       cadena_entrada       
        
       
