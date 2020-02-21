@@ -126,6 +126,8 @@ public class Token {
             return "signo mas";
         } else if (tipoToken == Tipo.virgulilla) {
             return "virgulilla";
+        } else if (tipoToken == Tipo.PR_CONJ) {
+            return "Palabra reservada: CONJ";
         } else{
             return "desconocido";
         }
