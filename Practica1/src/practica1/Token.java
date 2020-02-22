@@ -27,8 +27,10 @@ public class Token {
        
        nombre_conjunto,       
        flecha,
-       letra_minuscula,
+       letra,
        letra_mayuscula,
+       limite_primer_conjunto,
+       limite_ultimo_conjunto,
        numero,
        virgulilla,
        coma,
@@ -46,7 +48,11 @@ public class Token {
       
       doble_porcentaje,
       nombre_lexema,
-      cadena_entrada       
+      cadena_entrada, 
+      
+      operador_unario,
+      operador_binario, 
+      terminal
        
       
     }
@@ -105,9 +111,9 @@ public class Token {
         } else if (tipoToken == Tipo.interrogacion_cerrar) {
             return "Signo interrogacion cerrar";
         } else if (tipoToken == Tipo.letra_mayuscula) {
-            return "letra mayúscula";
-        } else if (tipoToken == Tipo.letra_minuscula) {
-            return "letra minúscula";
+            return "letra mayúscula de conjunto ";
+        } else if (tipoToken == Tipo.letra) {
+            return "letra de conjunto";
         } else if (tipoToken == Tipo.llave_abrir) {
             return "llave abrir";
         } else if (tipoToken == Tipo.llave_cerrar) {
@@ -128,6 +134,18 @@ public class Token {
             return "virgulilla";
         } else if (tipoToken == Tipo.PR_CONJ) {
             return "Palabra reservada: CONJ";
+        }else if (tipoToken == Tipo.nombre_lexema) {
+            return "nombre de lexema";
+        }else if (tipoToken == Tipo.limite_primer_conjunto) {
+            return "limite inicial conjunto";
+        }else if (tipoToken == Tipo.limite_ultimo_conjunto) {
+            return "limite final conjunto";
+        } else if (tipoToken == Tipo.operador_unario) {
+            return "operador unario";
+        }else if (tipoToken == Tipo.operador_binario) {
+            return "operador binario";
+        } else if (tipoToken == Tipo.terminal) {
+            return "terminal";
         } else{
             return "desconocido";
         }

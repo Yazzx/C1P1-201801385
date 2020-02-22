@@ -217,7 +217,7 @@ public class AnalizadorLexico {
                                 if (Character.isUpperCase(auxaux)) {
                                     agregarToken(Token.Tipo.letra_mayuscula);
                                 } else if (!Character.isUpperCase(auxaux)) {
-                                    agregarToken(Token.Tipo.letra_minuscula);
+                                    agregarToken(Token.Tipo.letra);
                                 }
 
                             }
