@@ -25,6 +25,9 @@ public class AnalizadorLexico2 {
     private int estado;
     private String auxlex;
 
+    String miDot;
+    private LinkedList<String> Arbol;
+
     int contador;
     // contador para el número de dígitos
 
@@ -159,6 +162,7 @@ public class AnalizadorLexico2 {
 
                         // metiendo a lista
                         if (e1_usado) {
+                            e1.cosas_preorder.add(new Token(Token.Tipo.aceptacion, "#"));
                             lista_er.add(e1);
                         }
 
@@ -550,8 +554,8 @@ public class AnalizadorLexico2 {
                         JOptionPane.showMessageDialog(null, "Error lexico con: " + c + " :c",
                                 "ERROR :c, No se reconoce palabra reservada", JOptionPane.WARNING_MESSAGE);
                         ErrorLexico e1 = new ErrorLexico(contaerror, contafila, contacolumna, c, descerror);
-                                ListaDeErrores.add(e1);
-                                contacolumna++;
+                        ListaDeErrores.add(e1);
+                        contacolumna++;
                         estado = 0;
                         auxlex = "";
                         i -= 1;
@@ -728,9 +732,62 @@ public class AnalizadorLexico2 {
         }
     }
 
-    public void generarArbolGraphviz(LinkedList<ExpresionRegular> lista) {
+    /*public LinkedList<String> ordenarArbol(LinkedList<ExpresionRegular> lista) {
 
-    }
+        
+        // lista de ER
+        for (int i = 0; i <= lista.size(); i++) {
 
+            miDot = "digraph G {\n";
+            
+            lista.get(i).cosas_preorder.add(new Token())
+            for (int j = lista.get(i).cosas_preorder.size(); j <= 0; j--) {
+                
+                // de izquierda a derecha
+                
+                // O_binario, terminal, terminal
+                
+                
+                
+            }
+            
+            for (int j = 0; j < lista.get(i).cosas_preorder.size(); j++) {
+
+                // de derecha a izquierda
+                
+                //  OPERADOR BINARIO TERMINAL TERMINAL
+                
+                if (lista.get(i).cosas_preorder.get(j).getTipoToken() == Token.Tipo.operador_binario &&
+                     lista.get(i).cosas_preorder.get(j+1).getTipoToken() == Token.Tipo.terminal &&
+                      lista.get(i).cosas_preorder.get(j+2).getTipoToken() == Token.Tipo.operador_binario  ) {
+                    
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+            // ACA SUPER TERMINA TODO
+
+            miDot += "}";
+
+            Arbol.add(miDot);
+
+            try {
+                FileWriter myWriter = new FileWriter("C:\\Users\\yasmi\\OneDrive\\Escritorio\\miDot.dot");
+                myWriter.write(miDot);
+                myWriter.close();
+                //System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }
+
+        return Arbol;
+    }*/
 
 }

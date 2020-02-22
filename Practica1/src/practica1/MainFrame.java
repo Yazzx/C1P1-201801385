@@ -4,6 +4,7 @@ package practica1;
  *
  * @author yasmi
  */
+import Objetos.ExpresionRegular;
 import Objetos.ObjToken;
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.logging.Level;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -26,15 +28,14 @@ import practica1.AnalizadorLexico2;
 public class MainFrame extends javax.swing.JFrame {
 
     String toda;
-    public String mihtml;
+    public String mihtml, migrafo;
+    AnalizadorLexico2 funcionaxfa = new AnalizadorLexico2();
 
     public MainFrame() {
         initComponents();
 
     }
 
-    
-    
     // <editor-fold>
     private void crearHTML(AnalizadorLexico2 analizador) {
         mihtml = "<!DOCTYPE HTML>"
@@ -115,10 +116,8 @@ public class MainFrame extends javax.swing.JFrame {
         mihtml = mihtml + "</body></html>";
 
         // AQUI COMIENZA LO DE GUARDAR EL COSO
-        
-        
         JFileChooser fc = new JFileChooser();
-        
+
         FileFilter filtro = new FileNameExtensionFilter("Archivos ER (*.html)", "HTML");
         fc.setFileFilter(filtro);
         fc.showSaveDialog(this);
@@ -137,6 +136,22 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println("Algo malo ha ocurrido </3");
         }
 
+    }
+
+    public void generarArbolGraphviz(AnalizadorLexico2 analizador) throws InterruptedException {
+
+        for (int i = 0; i < analizador.lista_er.size(); i++) {
+
+            Arbol_ER arbol = new Arbol_ER(analizador.lista_er.get(i).cosas_preorder);
+            arbol.Generardot();
+
+        }
+
+    }
+
+    public JButton loquenecesito() {
+
+        return jButton4;
     }
 
     // </editor-fold>   
@@ -182,6 +197,11 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTree1);
 
         jButton1.setText("Generar Automatas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Analizar Entradas");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -370,11 +390,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         // ESTO ES PAEA ANALIZAR
-        AnalizadorLexico2 funcionaxfa = new AnalizadorLexico2();
+        
 
         LinkedList<Token> listilla = funcionaxfa.escanear(jTextArea1.getText());
         funcionaxfa.imprimirListaTokens(listilla);
-        
+
         crearHTML(funcionaxfa);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -397,6 +417,16 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+   
+        try { 
+            generarArbolGraphviz(funcionaxfa);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

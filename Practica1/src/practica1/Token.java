@@ -50,9 +50,12 @@ public class Token {
       nombre_lexema,
       cadena_entrada, 
       
+      
+      // LOS QUE ME INTERESAN
       operador_unario,
       operador_binario, 
-      terminal
+      terminal, 
+      aceptacion
        
       
     }

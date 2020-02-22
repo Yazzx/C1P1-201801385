@@ -12,6 +12,9 @@ import java.awt.Color;
  * @author yasmi
  */
 public class Practica1 {
+    
+    
+    public static int contavecesER = 0;
 
     /**
      * @param args the command line arguments
