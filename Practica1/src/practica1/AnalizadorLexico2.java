@@ -549,6 +549,9 @@ public class AnalizadorLexico2 {
                     } else {
                         JOptionPane.showMessageDialog(null, "Error lexico con: " + c + " :c",
                                 "ERROR :c, No se reconoce palabra reservada", JOptionPane.WARNING_MESSAGE);
+                        ErrorLexico e1 = new ErrorLexico(contaerror, contafila, contacolumna, c, descerror);
+                                ListaDeErrores.add(e1);
+                                contacolumna++;
                         estado = 0;
                         auxlex = "";
                         i -= 1;
@@ -728,5 +731,6 @@ public class AnalizadorLexico2 {
     public void generarArbolGraphviz(LinkedList<ExpresionRegular> lista) {
 
     }
+
 
 }

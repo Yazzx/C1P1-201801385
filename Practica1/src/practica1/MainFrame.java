@@ -4,10 +4,12 @@ package practica1;
  *
  * @author yasmi
  */
+import Objetos.ObjToken;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.util.ArrayList;
@@ -21,18 +23,123 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import practica1.AnalizadorLexico2;
 
-
-
 public class MainFrame extends javax.swing.JFrame {
 
-    
     String toda;
+    public String mihtml;
 
     public MainFrame() {
         initComponents();
 
     }
 
+    
+    
+    // <editor-fold>
+    private void crearHTML(AnalizadorLexico2 analizador) {
+        mihtml = "<!DOCTYPE HTML>"
+                + "<html>"
+                + "<head>"
+                + "<title>Mis Tokens</title>"
+                + "<meta charset=\"utf8\">"
+                + "</head>"
+                + "<body><h1>Reporte de Análisis</h1>"
+                + "<h2>Lista de Tokens Aprobados</h2>";
+
+        // aquí van mis tokens geniales
+        mihtml = mihtml + "<table border=\"1\">"
+                + "<thead>"
+                + "<tr><th><strong>#</strong></th>"
+                + "<th><strong>Lexema</strong></th>"
+                + "<th><strong>Id Token</strong></th>"
+                + "<th><strong>Token</strong></th></tr></thead>"
+                + "<tbody>";
+
+        try {
+            System.out.println("Imprimiendo Errores");
+            System.out.println(analizador.ListaTokens.toString());
+            System.out.println("El tamaño de la lista es: " + analizador.ListaTokens.size());
+
+            for (int i = 0; i < analizador.ListaTokens.size(); i++) {
+
+                mihtml = mihtml
+                        + "<tr><td>" + analizador.ListaTokens.get(i).getId() + "</td>"
+                        + "<td>" + analizador.ListaTokens.get(i).getLexema() + "</td>"
+                        + "<td>" + analizador.ListaTokens.get(i).getIdToken() + "</td>"
+                        + "<td>" + analizador.ListaTokens.get(i).getToken() + "</td>"
+                        + " </tr>";
+                //contador++;
+
+            }
+
+        } catch (Exception e) {
+
+        }
+        mihtml = mihtml + "</tbody></table></div><br><br><br>";
+
+        // aquí empiezan los errores
+        mihtml = mihtml + "<h2>Lista de Errores</h2>";
+        mihtml = mihtml + "<table border=\"1\">"
+                + "<thead>"
+                + "<tr><th><strong>#</strong></th>"
+                + "<th><strong>Fila</strong></th>"
+                + "<th><strong>Columna</strong></th>"
+                + "<th><strong>Caracter</strong></th>"
+                + "<th><strong>Descripción</strong></th></tr></thead>"
+                + "<tbody>";
+
+        try {
+            //int contador = 0;
+
+            System.out.println("Imprimiendo Errores");
+            System.out.println(analizador.ListaDeErrores.toString());
+            System.out.println("El tamaño de la lista es: " + analizador.ListaDeErrores.size());
+
+            for (int i = 0; i < analizador.ListaDeErrores.size(); i++) {
+
+                mihtml = mihtml
+                        + "<tr><td>" + analizador.ListaDeErrores.get(i).getId() + "</td>"
+                        + "<td>" + analizador.ListaDeErrores.get(i).getFila() + "</td>"
+                        + "<td>" + analizador.ListaDeErrores.get(i).getColumna() + "</td>"
+                        + "<td>" + analizador.ListaDeErrores.get(i).getCaracter() + "</td>"
+                        + "<td>" + analizador.ListaDeErrores.get(i).getDescripción() + "</td>"
+                        + " </tr>";
+                //contador++;
+
+            }
+        } catch (Exception e) {
+
+        }
+
+        mihtml = mihtml + "</tbody></table></div><br><br><br>";
+        mihtml = mihtml + "</body></html>";
+
+        // AQUI COMIENZA LO DE GUARDAR EL COSO
+        
+        
+        JFileChooser fc = new JFileChooser();
+        
+        FileFilter filtro = new FileNameExtensionFilter("Archivos ER (*.html)", "HTML");
+        fc.setFileFilter(filtro);
+        fc.showSaveDialog(this);
+
+        File f = fc.getSelectedFile();
+
+        try {
+            FileWriter fw = new FileWriter(f);
+            String texto = mihtml;
+            fw.write(texto);
+            fw.close();
+            System.out.println("Tu archivo ha sido creado <3");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Algo malo ha ocurrido </3");
+        }
+
+    }
+
+    // </editor-fold>   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -55,7 +162,6 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -171,15 +277,12 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu5.add(jMenuItem1);
 
         jMenuItem2.setText("Guardar");
-        jMenu5.add(jMenuItem2);
-
-        jMenuItem3.setText("Guardar Como");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem3);
+        jMenu5.add(jMenuItem2);
 
         jMenuItem4.setText("Generar XML de Salida");
         jMenu5.add(jMenuItem4);
@@ -253,9 +356,7 @@ public class MainFrame extends javax.swing.JFrame {
                 }
             }
             // </editor-fold>        
-            
-            
-            
+
         }
 
 
@@ -266,21 +367,36 @@ public class MainFrame extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // GUARDAR COMO:
-
-
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         // ESTO ES PAEA ANALIZAR
-    
-            AnalizadorLexico2 funcionaxfa = new AnalizadorLexico2();
+        AnalizadorLexico2 funcionaxfa = new AnalizadorLexico2();
+
+        LinkedList<Token> listilla = funcionaxfa.escanear(jTextArea1.getText());
+        funcionaxfa.imprimirListaTokens(listilla);
         
-            LinkedList<Token> listilla = funcionaxfa.escanear(jTextArea1.getText());
-            funcionaxfa.imprimirListaTokens(listilla);
+        crearHTML(funcionaxfa);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+
+        JFileChooser fc = new JFileChooser();
+        fc.showSaveDialog(this);
+
+        File f = fc.getSelectedFile();
+
+        try {
+            FileWriter fw = new FileWriter(f);
+            String texto = jTextArea1.getText();
+            fw.write(texto);
+            fw.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,7 +446,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
